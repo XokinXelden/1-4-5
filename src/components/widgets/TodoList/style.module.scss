@@ -1,0 +1,20 @@
+@use "../../shared/styles/index.scss" as *;
+
+.pageWrapper {
+  margin: 50px 0;
+}
+
+.topTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-weight: 700;
+    font-size: 36px;
+    color: $primary-color;
+  }
+}
+
+.taskContainer {
+  margin-top: 40px;
+}

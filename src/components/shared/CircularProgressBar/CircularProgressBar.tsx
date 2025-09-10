@@ -21,17 +21,17 @@ export const CircularProgressBar = ({
       width={sqSize}
       height={sqSize}
       viewBox={viewBox}
-      className={style["circular-progressbar"]}
+      className={style.circularProgressbar}
     >
       <circle
-        className={style["circle-background"]}
+        className={style.circleBackground}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
       <circle
-        className={style["circle-progress"]}
+        className={style.circleProgress}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}

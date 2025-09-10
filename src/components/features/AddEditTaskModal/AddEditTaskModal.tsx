@@ -20,10 +20,10 @@ export const AddEditTaskModal = ({
   createNewCard,
   acceptEditTask,
 }: onCloser) => {
-  const [prioritySelected, setPrioritySelected] = useState(
+  const [prioritySelected, setPrioritySelected] = useState<string>(
     targetTaskCard?.priority ? targetTaskCard.priority : "medium"
   );
-  const [value, setValue] = useState(
+  const [value, setValue] = useState<string>(
     targetTaskCard?.title ? targetTaskCard.title : ""
   );
 
@@ -31,13 +31,13 @@ export const AddEditTaskModal = ({
     <Modal>
       <form>
         <div className={style.addEditModal}>
-          <div className={style.flxBetween}>
+          <div className="flx-between">
             <span className={style.modalTitle}>
               {targetTaskCard?.title
                 ? "Редактировать задачу"
                 : "Добавить задачу"}
             </span>
-            <Close className={style.cp} onClick={onClose} />
+            <Close className="cp" onClick={onClose} />
           </div>
           <Input
             label="Задача"
@@ -54,15 +54,14 @@ export const AddEditTaskModal = ({
               {["high", "medium", "low"].map((priority) => (
                 <li
                   key={priority}
-                  className={
-                    style[
-                      classNames(
-                        priority === `${prioritySelected}`
-                          ? `${priority}Selected`
-                          : priority
-                      )
-                    ]
-                  }
+                  className={classNames(
+                    priority === "high"
+                      ? style.high
+                      : priority === "medium"
+                      ? style.medium
+                      : style.low,
+                    priority === prioritySelected && style.Selected
+                  )}
                   onClick={() => {
                     setPrioritySelected(priority);
                   }}
@@ -76,7 +75,7 @@ export const AddEditTaskModal = ({
               ))}
             </ul>
           </div>
-          <div className={classNames(style.flxRight, style["mt-50"])}>
+          <div className="flx-right mt-50">
             <Button
               title={targetTaskCard?.title ? "Редактировать " : "Добавить"}
               onClick={() => {

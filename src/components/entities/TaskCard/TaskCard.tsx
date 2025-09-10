@@ -2,7 +2,7 @@ import classNames from "classnames";
 import DeleteIcon from "../../shared/assets/icons/delete.svg?react";
 import EditIcon from "../../shared/assets/icons/edit.svg?react";
 import { CircularProgressBar } from "../../shared/CircularProgressBar/CircularProgressBar";
-import "./style.scss";
+import style from "./style.module.scss";
 import { useState } from "react";
 
 type TaskType = {
@@ -38,14 +38,23 @@ export const TaskCard = ({
     }
   };
   return (
-    <div className="task-card">
+    <div className={style.taskCard}>
       <div className="flex w-100">
-        <span className="task-title">Задача</span>
-        <span className="task">{title}</span>
+        <span className={style.taskTitle}>Задача</span>
+        <span className={style.task}>{title}</span>
       </div>
       <div className="flex">
-        <span className="priority-title">Приоритет</span>
-        <span className={classNames(`priority--${priority}`, "priority")}>
+        <span className={style.priorityTitle}>Приоритет</span>
+        <span
+          className={classNames(
+            priority === "high"
+              ? style.highPriority
+              : priority === "medium"
+              ? style.mediumPriority
+              : style.lowPriority,
+            style.priority
+          )}
+        >
           {priority === `high`
             ? `Высокий`
             : priority === `medium`
@@ -53,9 +62,16 @@ export const TaskCard = ({
             : `Низкий`}
         </span>
       </div>
-      <div className="task-status-wrapper">
+      <div className={style.taskStatusWrapper}>
         <button
-          className={classNames(`status--${statusUse}`, "status")}
+          className={classNames(
+            statusUse === "done"
+              ? style.statusDone
+              : statusUse === "progress"
+              ? style.statusProgress
+              : null,
+            style.status
+          )}
           onClick={() => {
             toDoSwap();
           }}
@@ -67,14 +83,14 @@ export const TaskCard = ({
             : `Сделано`}
         </button>
       </div>
-      <div className="progress">
+      <div className={style.progress}>
         <CircularProgressBar
           strokeWidth={2}
           sqSize={24}
           percentage={progress}
         />
       </div>
-      <div className="actions">
+      <div className={style.actions}>
         <EditIcon
           className="mr-20 cp"
           onClick={() => {
