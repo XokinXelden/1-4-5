@@ -30,9 +30,9 @@ export const AddEditTaskModal = ({
   return (
     <Modal>
       <form>
-        <div className={style["add-edit-modal"]}>
-          <div className={style["flx-between"]}>
-            <span className={style["modal-title"]}>
+        <div className={style.addEditModal}>
+          <div className={style.flxBetween}>
+            <span className={style.modalTitle}>
               {targetTaskCard?.title
                 ? "Редактировать задачу"
                 : "Добавить задачу"}
@@ -48,9 +48,9 @@ export const AddEditTaskModal = ({
             name="title"
             value={value}
           />
-          <div className={style["modal-priority"]}>
+          <div className={style.modalPriority}>
             <span>Приоритет</span>
-            <ul className={style["priority-buttons"]}>
+            <ul className={style.priorityButtons}>
               {["high", "medium", "low"].map((priority) => (
                 <li
                   key={priority}
@@ -58,7 +58,7 @@ export const AddEditTaskModal = ({
                     style[
                       classNames(
                         priority === `${prioritySelected}`
-                          ? `${priority}-selected`
+                          ? `${priority}Selected`
                           : priority
                       )
                     ]
@@ -76,7 +76,7 @@ export const AddEditTaskModal = ({
               ))}
             </ul>
           </div>
-          <div className={classNames(style["flx-right"], style["mt-50"])}>
+          <div className={classNames(style.flxRight, style["mt-50"])}>
             <Button
               title={targetTaskCard?.title ? "Редактировать " : "Добавить"}
               onClick={() => {

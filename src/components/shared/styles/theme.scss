@@ -23,6 +23,11 @@ $modal-priority-gap: 13px;
   align-items: $align;
 }
 
-@mixin shadow($x: 0, $y: 6px, $blur: 58px, $color: rgba(196, 203, 214, 0.103611)) {
+@mixin shadow(
+  $x: 0,
+  $y: 6px,
+  $blur: 58px,
+  $color: rgba(196, 203, 214, 0.103611)
+) {
   box-shadow: $x $y $blur $color;
 }

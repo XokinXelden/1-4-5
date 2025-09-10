@@ -1,4 +1,4 @@
-@use "../../shared/styles/breakpoints.scss" as breakpoints;
+@import "../../shared/styles/breakpoints.scss";
 
 .modal {
   position: fixed;
@@ -12,7 +12,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.modalContent {
   background-color: #ffffff;
   box-shadow: 0px 6px 58px rgba(121, 145, 173, 0.195504);
   border-radius: 24px;
@@ -20,7 +20,7 @@
   margin: 15% auto;
   width: 40%;
   min-height: 200px;
-  @include breakpoints.devices(sm) {
+  @include devices(sm) {
     width: 90%;
     margin: 50% auto;
     padding: 30px 30px;
