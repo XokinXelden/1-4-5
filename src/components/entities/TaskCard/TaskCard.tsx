@@ -4,6 +4,8 @@ import EditIcon from "../../shared/assets/icons/edit.svg?react";
 import { CircularProgressBar } from "../../shared/CircularProgressBar/CircularProgressBar";
 import style from "./style.module.scss";
 import { useState } from "react";
+import { useTypedDispatch } from "../../../hook/redux";
+import { statusTask } from "../../../reducer/TodoSlice";
 
 type TaskType = {
   id: string;
@@ -17,26 +19,15 @@ type AllPropsType = {
   task: TaskType;
 
   onShowDeleteModal: () => void;
-  editorTaskCard: (id: string, title: string, priority: string) => void;
+  editorTaskCard: () => void;
 };
 export const TaskCard = ({
   task: { id, title, priority, status, progress },
   onShowDeleteModal,
   editorTaskCard,
 }: AllPropsType) => {
-  const [statusUse, setStatusUse] = useState<string>(status);
-  const toDoSwap = () => {
-    switch (statusUse) {
-      case "todo":
-        setStatusUse("progress");
-        break;
-      case "progress":
-        setStatusUse("done");
-        break;
-      case "done":
-        setStatusUse("todo");
-    }
-  };
+  const dispatch = useTypedDispatch();
+
   return (
     <div className={style.taskCard}>
       <div className="flex w-100">
@@ -65,20 +56,20 @@ export const TaskCard = ({
       <div className={style.taskStatusWrapper}>
         <button
           className={classNames(
-            statusUse === "done"
+            status === "done"
               ? style.statusDone
-              : statusUse === "progress"
+              : status === "progress"
               ? style.statusProgress
               : null,
             style.status
           )}
           onClick={() => {
-            toDoSwap();
+            dispatch(statusTask({ status: status, id: id }));
           }}
         >
-          {statusUse === `todo`
+          {status === `todo`
             ? `Сделать`
-            : statusUse === `progress`
+            : status === `progress`
             ? `В процессе`
             : `Сделано`}
         </button>
@@ -91,12 +82,7 @@ export const TaskCard = ({
         />
       </div>
       <div className={style.actions}>
-        <EditIcon
-          className="mr-20 cp"
-          onClick={() => {
-            editorTaskCard(id, title, priority);
-          }}
-        />
+        <EditIcon className="mr-20 cp" onClick={editorTaskCard} />
         <DeleteIcon className="cp" onClick={onShowDeleteModal} />
       </div>
     </div>
