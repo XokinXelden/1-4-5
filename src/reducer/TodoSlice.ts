@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Task, taskList } from "../components/shared/serverData/taskList";
 import { Priority, Status } from "../types";
-import { medium } from "../components/features/AddEditTaskModal/style.module.scss";
 
 type ActualTargetID = { id?: string; title?: string; priority?: string };
 
@@ -27,7 +26,33 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     // Добавить
-    addTask: (state, action) => {},
+    addTask: (state) => {
+      let newId: number = 0;
+      const lastElem = state.todoList.length;
+      const title = state.actualTargetID?.title;
+      const priority = state.actualTargetID?.priority as Priority;
+      for (let i = 1; newId === 0; i++) {
+        if (
+          !state.todoList.some((elem) => {
+            return +elem.id === i;
+          })
+        ) {
+          newId = i;
+        }
+
+        if (newId === 0 && i >= lastElem) newId = i + 1;
+      }
+      const newTaskCard = {
+        id: newId < 10 ? `0${newId}` : `${newId}`,
+        title: title === "" ? "Безымянная задача :С" : title ?? "",
+        priority: priority ?? Priority.MEDIUM,
+        status: Status.TODO,
+        progress: 0,
+      };
+      state.todoList = [newTaskCard, ...state.todoList];
+      state.actualTargetID = undefined;
+      state.showAddEditModal = !state.showAddEditModal;
+    },
     // Удалить
     deleteTask: (state) => {
       const id = state.actualTargetID?.id;
@@ -105,21 +130,21 @@ export const todoSlice = createSlice({
       const priority = action.payload.priority;
 
       if (state.actualTargetID?.priority) {
-        switch (priority) {
-          case "high":
-            state.actualTargetID.priority = Priority.HIGH;
-            break;
-          case "medium":
-            state.actualTargetID.priority = Priority.MEDIUM;
-            break;
-          case "low":
-            state.actualTargetID.priority = Priority.LOW;
-        }
+        state.actualTargetID.priority = priority;
+      } else if (state.actualTargetID) {
+        state.actualTargetID = {
+          ...state.actualTargetID,
+          priority: priority,
+        };
+      } else {
+        state.actualTargetID = { priority: priority };
       }
     },
     actualTitle: (state, action) => {
       const titleActual = action.payload.title;
-      if (!state.actualTargetID?.title) state.actualTargetID = { title: "" };
+      if (!state.actualTargetID?.title) {
+        state.actualTargetID = { ...state.actualTargetID, title: "" };
+      }
       state.actualTargetID.title = titleActual;
     },
   },

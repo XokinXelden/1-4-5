@@ -3,7 +3,7 @@ import DeleteIcon from "../../shared/assets/icons/delete.svg?react";
 import EditIcon from "../../shared/assets/icons/edit.svg?react";
 import { CircularProgressBar } from "../../shared/CircularProgressBar/CircularProgressBar";
 import style from "./style.module.scss";
-import { useState } from "react";
+
 import { useTypedDispatch } from "../../../hook/redux";
 import { statusTask } from "../../../reducer/TodoSlice";
 
